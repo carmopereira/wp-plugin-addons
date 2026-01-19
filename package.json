@@ -1,0 +1,32 @@
+{
+	"name": "@carmopereira/wp-block-setup",
+	"version": "1.0.0",
+	"description": "Setup tool para adicionar scripts custom e configurações aos projetos WordPress create-block",
+	"author": "carmopereira",
+	"license": "GPL-2.0-or-later",
+	"main": "setup.js",
+	"bin": {
+		"carmo-wp-block-setup": "./setup.js"
+	},
+	"files": [
+		"setup.js",
+		"setups/"
+	],
+	"keywords": [
+		"wordpress",
+		"gutenberg",
+		"block",
+		"setup",
+		"scaffold"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/carmopereira/carmo-wp-block-template.git"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"engines": {
+		"node": ">=14.0.0"
+	}
+}
