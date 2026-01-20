@@ -13,11 +13,11 @@ function question(query) {
 	return new Promise((resolve) => rl.question(query, resolve));
 }
 
-// Obter diretório do pacote npm (onde está este ficheiro)
+// Get npm package directory (where this file lives)
 const packageDir = __dirname;
 const setupsDir = path.join(packageDir, 'setups');
 
-// Listar setups disponíveis
+// List available setups
 function getAvailableSetups() {
 	if (!fs.existsSync(setupsDir)) {
 		return [];
@@ -28,23 +28,23 @@ function getAvailableSetups() {
 		.map((dirent) => dirent.name);
 }
 
-// Obter diretório do projeto atual (onde será aplicado o setup)
+// Get current project directory (where setup will be applied)
 const projectDir = process.cwd();
 const projectPackageJson = path.join(projectDir, 'package.json');
 
-// Verificar se estamos num projeto válido
+// Check if we are in a valid project
 if (!fs.existsSync(projectPackageJson)) {
-	console.error('❌ package.json não encontrado!');
-	console.error('   Certifica-te de que estás no diretório do projeto.');
+	console.error('❌ package.json not found!');
+	console.error('   Make sure you are in the project directory.');
 	process.exit(1);
 }
 
-// Ler package.json do projeto
+// Read project package.json
 let projectPackage;
 try {
 	projectPackage = JSON.parse(fs.readFileSync(projectPackageJson, 'utf8'));
 } catch (error) {
-	console.error('❌ Erro ao ler package.json:', error.message);
+	console.error('❌ Error reading package.json:', error.message);
 	process.exit(1);
 }
 
@@ -53,35 +53,35 @@ const pluginName = projectPackage.name;
 async function main() {
 	console.log('\n🚀 Carmo WP Block Setup\n');
 	console.log(`Plugin: ${pluginName}`);
-	console.log(`Diretório: ${projectDir}\n`);
+	console.log(`Directory: ${projectDir}\n`);
 
-	// Obter setup a aplicar
+	// Get setup to apply
 	const availableSetups = getAvailableSetups();
 	if (availableSetups.length === 0) {
-		console.error('❌ Nenhum setup encontrado em setups/');
+		console.error('❌ No setup found in setups/');
 		process.exit(1);
 	}
 
 	let setupName = process.argv[2];
 
-	// Se não foi fornecido argumento, perguntar interativamente
+	// If no argument was provided, ask interactively
 	if (!setupName || !availableSetups.includes(setupName)) {
 		if (availableSetups.length === 1) {
 			setupName = availableSetups[0];
-			console.log(`📦 Usando setup: ${setupName}\n`);
+			console.log(`📦 Using setup: ${setupName}\n`);
 		} else {
-			console.log('Setups disponíveis:');
+			console.log('Available setups:');
 			availableSetups.forEach((setup, index) => {
 				console.log(`  ${index + 1}. ${setup}`);
 			});
-			const answer = await question('\nEscolhe o setup (número ou nome): ');
+			const answer = await question('\nChoose a setup (number or name): ');
 			const num = parseInt(answer, 10);
 			if (!isNaN(num) && num > 0 && num <= availableSetups.length) {
 				setupName = availableSetups[num - 1];
 			} else if (availableSetups.includes(answer.trim())) {
 				setupName = answer.trim();
 			} else {
-				console.error('❌ Setup inválido!');
+				console.error('❌ Invalid setup!');
 				rl.close();
 				process.exit(1);
 			}
@@ -90,14 +90,14 @@ async function main() {
 
 	const setupDir = path.join(setupsDir, setupName);
 	if (!fs.existsSync(setupDir)) {
-		console.error(`❌ Setup "${setupName}" não encontrado!`);
+		console.error(`❌ Setup "${setupName}" not found!`);
 		rl.close();
 		process.exit(1);
 	}
 
-	console.log(`📦 Aplicando setup: ${setupName}\n`);
+	console.log(`📦 Applying setup: ${setupName}\n`);
 
-	// 1. Adicionar scripts ao package.json
+	// 1. Add scripts to package.json
 	const packageScriptsPath = path.join(setupDir, 'package-scripts.json');
 	if (fs.existsSync(packageScriptsPath)) {
 		const packageScripts = JSON.parse(
@@ -112,15 +112,15 @@ async function main() {
 			JSON.stringify(projectPackage, null, '\t') + '\n',
 			'utf8'
 		);
-		console.log('✅ Scripts adicionados ao package.json');
+		console.log('✅ Scripts added to package.json');
 	}
 
-	// 2. Copiar scripts
+	// 2. Copy scripts
 	const setupScriptsDir = path.join(setupDir, 'setup');
 	const projectScriptsDir = path.join(projectDir, 'scripts');
 
 	if (fs.existsSync(setupScriptsDir)) {
-		// Criar pasta scripts se não existir
+		// Create scripts folder if it does not exist
 		if (!fs.existsSync(projectScriptsDir)) {
 			fs.mkdirSync(projectScriptsDir, { recursive: true });
 		}
@@ -130,15 +130,15 @@ async function main() {
 			const srcPath = path.join(setupScriptsDir, script);
 			const destPath = path.join(projectScriptsDir, script);
 			fs.copyFileSync(srcPath, destPath);
-			// Tornar executável se for .js
+			// Make executable if it is .js
 			if (script.endsWith('.js')) {
 				fs.chmodSync(destPath, '755');
 			}
-			console.log(`✅ Script copiado: ${script}`);
+			console.log(`✅ Script copied: ${script}`);
 		}
 	}
 
-	// 3. Atualizar .gitignore
+	// 3. Update .gitignore
 	const setupGitignorePath = path.join(setupDir, '.gitignore');
 	const projectGitignorePath = path.join(projectDir, '.gitignore');
 
@@ -150,7 +150,7 @@ async function main() {
 			projectGitignore = fs.readFileSync(projectGitignorePath, 'utf8');
 		}
 
-		// Adicionar entradas do setup que não existem no projeto
+		// Add setup entries that do not exist in the project
 		const setupLines = setupGitignore
 			.split('\n')
 			.map((line) => line.trim())
@@ -171,21 +171,21 @@ async function main() {
 
 		if (added) {
 			fs.writeFileSync(projectGitignorePath, projectGitignore, 'utf8');
-			console.log('✅ .gitignore atualizado');
+			console.log('✅ .gitignore updated');
 		}
 	}
 
-	console.log('\n✅ Setup aplicado com sucesso!\n');
-	console.log('Próximos passos:');
-	console.log('  - Executa "npm install" se necessário');
-	console.log('  - Usa "npm run symlink" para criar symlink do plugin');
-	console.log('  - Usa "npm run updateGIT" para fazer commit/push\n');
+	console.log('\n✅ Setup applied successfully!\n');
+	console.log('Next steps:');
+	console.log('  - Run "npm install" if needed');
+	console.log('  - Use "npm run symlink" to create the plugin symlink');
+	console.log('  - Use "npm run updateGIT" to commit/push\n');
 
 	rl.close();
 }
 
 main().catch((error) => {
-	console.error('\n❌ Erro:', error.message);
+	console.error('\n❌ Error:', error.message);
 	rl.close();
 	process.exit(1);
 });

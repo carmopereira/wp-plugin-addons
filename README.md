@@ -1,76 +1,76 @@
 # @carmopereira/wp-block-setup
 
-Ferramenta para adicionar scripts custom e configurações aos projetos WordPress criados com `@wordpress/create-block`.
+Tool to add custom scripts and configuration to WordPress projects created with `@wordpress/create-block`.
 
-## Instalação
+## Installation
 
 ```bash
 npm install -g @carmopereira/wp-block-setup
 ```
 
-Ou usar diretamente com `npx`:
+Or run directly with `npx`:
 
 ```bash
 npx @carmopereira/wp-block-setup
 ```
 
-## Uso
+## Usage
 
-### 1. Criar um novo block WordPress
+### 1. Create a new WordPress block
 
 ```bash
-npx @wordpress/create-block@latest meu-plugin --variant=dynamic
-cd meu-plugin
+npx @wordpress/create-block@latest my-plugin --variant=dynamic
+cd my-plugin
 ```
 
-### 2. Aplicar o setup custom
+### 2. Apply the custom setup
 
 ```bash
 npx @carmopereira/wp-block-setup create-block-carmo-addon
 ```
 
-Ou sem argumento para escolher interativamente:
+Or run without arguments to choose interactively:
 
 ```bash
 npx @carmopereira/wp-block-setup
 ```
 
-## O que é adicionado
+## What gets added
 
-O setup `create-block-carmo-addon` adiciona:
+The `create-block-carmo-addon` setup adds:
 
-### Scripts ao package.json
+### Scripts to `package.json`
 
-- **`prebuild`**: Atualiza automaticamente a versão antes do build (patch version)
-- **`updateGIT`**: Script interativo para fazer git add, commit e push
-- **`symlink`**: Script para criar symlink do plugin no diretório WordPress
+- **`prebuild`**: Automatically updates the version before build (patch version)
+- **`updateGIT`**: Interactive script to run git add, commit, and push
+- **`symlink`**: Script to create a plugin symlink in the WordPress directory
 
-### Scripts na pasta `scripts/`
+### Scripts in the `scripts/` folder
 
-- **`sync-version.js`**: Sincroniza a versão entre `package.json`, ficheiro PHP principal e `block.json`
-- **`create-symlink.js`**: Cria symlink do plugin para o diretório `wp-content/plugins`
-- **`update-git.js`**: Facilita o processo de commit e push
+- **`sync-version.js`**: Syncs the version between `package.json`, the main PHP file, and `block.json`
+- **`create-symlink.js`**: Creates the plugin symlink in `wp-content/plugins`
+- **`update-git.js`**: Simplifies the commit and push process
 
-### Atualizações ao `.gitignore`
+### `.gitignore` updates
 
-Adiciona entradas padrão para build artefacts, logs, etc.
+Adds standard entries for build artifacts, logs, etc.
 
-## Scripts disponíveis
+## Available scripts
 
-Após aplicar o setup, podes usar:
+After applying the setup, you can run:
 
 ```bash
-# Criar symlink do plugin
+# Create plugin symlink
 npm run symlink
 
-# Fazer commit e push
+# Commit and push
 npm run updateGIT
 
-# Build (atualiza versão automaticamente)
+# Build (automatically updates version)
 npm run build
 ```
 
-## Estrutura do repositório
+## Repository structure
 
 ```
 carmo-wp-block-template/
@@ -88,23 +88,23 @@ carmo-wp-block-template/
 └── README.md
 ```
 
-## Desenvolvimento
+## Development
 
-Para testar localmente:
+To test locally:
 
 ```bash
 npm link
-cd /caminho/para/projeto-wordpress
+cd /path/to/wordpress-project
 npx @carmopereira/wp-block-setup
 ```
 
-## Publicar no npm
+## Publish to npm
 
 ```bash
 npm login
 npm publish --access public
 ```
 
-## Licença
+## License
 
 GPL-2.0-or-later

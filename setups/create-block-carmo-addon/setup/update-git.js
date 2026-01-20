@@ -10,10 +10,10 @@ const run = (cmd) => execSync(cmd, { stdio: 'inherit' });
 
 const getStatus = () => execSync('git status --porcelain').toString().trim();
 
-rl.question('Mensagem do commit: ', (message) => {
+rl.question('Commit message: ', (message) => {
 	const msg = (message || '').trim();
 	if (!msg) {
-		console.error('Erro: mensagem vazia.');
+		console.error('Error: empty message.');
 		rl.close();
 		process.exit(1);
 	}
@@ -23,15 +23,15 @@ rl.question('Mensagem do commit: ', (message) => {
 
 	const status = getStatus();
 	if (!status) {
-		console.log('Sem alterações para commit.');
+		console.log('No changes to commit.');
 		rl.close();
 		process.exit(0);
 	}
 
-	rl.question('Continuar com add/commit/push? (s/N): ', (answer) => {
+	rl.question('Continue with add/commit/push? (y/N): ', (answer) => {
 		const normalized = (answer || '').trim().toLowerCase();
-		if (normalized !== 's' && normalized !== 'sim') {
-			console.log('Operação cancelada.');
+		if (normalized !== 'y' && normalized !== 'yes') {
+			console.log('Operation cancelled.');
 			rl.close();
 			process.exit(0);
 		}

@@ -1,84 +1,84 @@
-# Instruções para Publicar no npm
+# Instructions for Publishing to npm
 
-Este documento explica como publicar este repositório como pacote npm para usar como addon em projetos de blocos WordPress.
+This document explains how to publish this repository as an npm package to use as an addon in WordPress block projects.
 
-## 📋 Pré-requisitos
+## 📋 Prerequisites
 
-1. **Conta no npm**: Cria uma conta em [npmjs.com](https://www.npmjs.com/signup)
-2. **Node.js**: Versão 14.0.0 ou superior
-3. **Git**: Repositório configurado e sincronizado com GitHub
+1. **npm account**: Create an account at [npmjs.com](https://www.npmjs.com/signup)
+2. **Node.js**: Version 14.0.0 or higher
+3. **Git**: Repository configured and synced with GitHub
 
-## 🔧 Configuração Inicial
+## 🔧 Initial Setup
 
-### 1. Verificar o package.json
+### 1. Check `package.json`
 
-O `package.json` já está configurado com:
-- Nome do pacote: `@carmopereira/wp-block-setup`
-- Versão: `1.0.0`
-- Binário: `carmo-wp-block-setup`
-- Ficheiros incluídos: `setup.js` e `setups/`
+The `package.json` is already configured with:
+- Package name: `@carmopereira/wp-block-setup`
+- Version: `1.0.0`
+- Binary: `carmo-wp-block-setup`
+- Included files: `setup.js` and `setups/`
 
-### 2. Fazer login no npm
+### 2. Log in to npm
 
 ```bash
 npm login
 ```
 
-Introduz as tuas credenciais:
+Enter your credentials:
 - Username
 - Password
 - Email
-- OTP (se tiveres 2FA ativado)
+- OTP (if you have 2FA enabled)
 
-### 3. Verificar que estás logado
+### 3. Verify you are logged in
 
 ```bash
 npm whoami
 ```
 
-Deve mostrar o teu username do npm.
+It should show your npm username.
 
-## 📦 Publicar no npm
+## 📦 Publish to npm
 
-### Opção 1: Publicação Normal
+### Option 1: Normal publish
 
 ```bash
 npm publish --access public
 ```
 
-> **Nota**: O `--access public` é necessário porque o pacote usa um scope (`@carmopereira/`). Scoped packages são privados por padrão.
+> **Note**: `--access public` is required because the package uses a scope (`@carmopereira/`). Scoped packages are private by default.
 
-### Opção 2: Publicação com Verificação
+### Option 2: Publish with verification
 
-Antes de publicar, podes verificar o que será incluído:
+Before publishing, you can verify what will be included:
 
 ```bash
-# Ver o que será publicado
+# See what will be published
 npm pack --dry-run
 
-# Criar um tarball local para testar
+# Create a local tarball for testing
 npm pack
 ```
 
-Isto cria um ficheiro `.tgz` que podes inspecionar.
+This creates a `.tgz` file you can inspect.
 
-## 🔄 Atualizar Versão
+## 🔄 Update Version
 
-Quando fizeres alterações e quiseres publicar uma nova versão:
+When you make changes and want to publish a new version:
 
-### Método 1: Atualizar manualmente
+### Method 1: Update manually
 
-1. Edita o `package.json` e incrementa a versão:
-   - Patch: `1.0.0` → `1.0.1` (correções)
-   - Minor: `1.0.0` → `1.1.0` (novas funcionalidades)
-   - Major: `1.0.0` → `2.0.0` (mudanças incompatíveis)
+1. Edit `package.json` and bump the version:
+   - Patch: `1.0.0` → `1.0.1` (fixes)
+   - Minor: `1.0.0` → `1.1.0` (new features)
+   - Major: `1.0.0` → `2.0.0` (breaking changes)
 
-2. Publica:
+2. Publish:
 ```bash
 npm publish --access public
 ```
 
-### Método 2: Usar npm version (recomendado)
+### Method 2: Use npm version (recommended)
 
 ```bash
 # Patch version (1.0.0 → 1.0.1)
@@ -91,49 +91,49 @@ npm version minor
 npm version major
 ```
 
-Isto automaticamente:
-- Atualiza o `package.json`
-- Cria um commit git com a tag
-- Podes depois fazer `npm publish --access public`
+This automatically:
+- Updates `package.json`
+- Creates a git commit with a tag
+- You can then run `npm publish --access public`
 
-## ✅ Verificar Publicação
+## ✅ Verify publication
 
-Após publicar, verifica se está disponível:
+After publishing, verify it is available:
 
-1. **No navegador**: https://www.npmjs.com/package/@carmopereira/wp-block-setup
+1. **In the browser**: https://www.npmjs.com/package/@carmopereira/wp-block-setup
 2. **Via CLI**:
 ```bash
 npm view @carmopereira/wp-block-setup
 ```
 
-## 🚀 Usar o Pacote Publicado
+## 🚀 Use the published package
 
-Depois de publicado, outros desenvolvedores podem usar:
+Once published, other developers can use:
 
-### Instalação Global
+### Global installation
 
 ```bash
 npm install -g @carmopereira/wp-block-setup
 ```
 
-Depois usar:
+Then run:
 ```bash
 carmo-wp-block-setup
 ```
 
-### Usar com npx (sem instalar)
+### Use with npx (no install)
 
 ```bash
 npx @carmopereira/wp-block-setup
 ```
 
-### Instalação Local no Projeto
+### Local installation in a project
 
 ```bash
 npm install --save-dev @carmopereira/wp-block-setup
 ```
 
-Depois adicionar ao `package.json` do projeto:
+Then add to the project `package.json`:
 ```json
 {
   "scripts": {
@@ -142,72 +142,72 @@ Depois adicionar ao `package.json` do projeto:
 }
 ```
 
-## 🧪 Testar Localmente Antes de Publicar
+## 🧪 Test locally before publishing
 
-### Usar npm link
+### Using npm link
 
-1. No diretório deste projeto:
+1. In this project directory:
 ```bash
 npm link
 ```
 
-2. Noutro projeto onde queres testar:
+2. In another project where you want to test:
 ```bash
 npm link @carmopereira/wp-block-setup
 ```
 
-3. Testar:
+3. Test:
 ```bash
 npx @carmopereira/wp-block-setup
 ```
 
-4. Quando terminares, desfazer o link:
+4. When finished, unlink:
 ```bash
 npm unlink @carmopereira/wp-block-setup
 ```
 
-## 📝 Checklist Antes de Publicar
+## 📝 Checklist before publishing
 
-- [ ] Versão atualizada no `package.json`
-- [ ] README.md atualizado e completo
-- [ ] Código testado localmente
-- [ ] `.npmignore` configurado corretamente
-- [ ] Ficheiros desnecessários não incluídos
-- [ ] Login no npm feito (`npm whoami`)
-- [ ] Repositório Git sincronizado
+- [ ] Version updated in `package.json`
+- [ ] README.md updated and complete
+- [ ] Code tested locally
+- [ ] `.npmignore` configured correctly
+- [ ] Unnecessary files excluded
+- [ ] Logged in to npm (`npm whoami`)
+- [ ] Git repository synced
 
-## 🔍 Estrutura do Pacote Publicado
+## 🔍 Published package structure
 
-Quando publicado, o npm incluirá apenas:
-- `setup.js` (ficheiro principal)
-- `setups/` (diretório com os setups)
-- `package.json` (metadados)
+When published, npm will include only:
+- `setup.js` (main file)
+- `setups/` (setup directory)
+- `package.json` (metadata)
 
-Ficheiros excluídos (via `.npmignore`):
-- `README.md` (mas o npm mostra o README do repositório)
+Excluded files (via `.npmignore`):
+- `README.md` (npm shows the repository README)
 - `.git/`
-- Ficheiros de desenvolvimento
+- Development files
 
-## ⚠️ Problemas Comuns
+## ⚠️ Common issues
 
-### Erro: "You do not have permission to publish"
+### Error: "You do not have permission to publish"
 
-- Verifica que estás logado: `npm whoami`
-- Verifica que o nome do pacote está correto
-- Se o pacote já existe, só o dono pode publicar atualizações
+- Make sure you are logged in: `npm whoami`
+- Confirm the package name is correct
+- If the package already exists, only the owner can publish updates
 
-### Erro: "Package name too similar to existing package"
+### Error: "Package name too similar to existing package"
 
-- O nome `@carmopereira/wp-block-setup` já está reservado para ti
-- Se quiseres mudar, edita o `package.json` antes de publicar
+- The name `@carmopereira/wp-block-setup` is already reserved for you
+- If you want to change it, edit `package.json` before publishing
 
-### Erro: "You cannot publish over the previously published versions"
+### Error: "You cannot publish over the previously published versions"
 
-- A versão já existe no npm
-- Incrementa a versão no `package.json`
+- The version already exists on npm
+- Bump the version in `package.json`
 
-## 📚 Recursos Adicionais
+## 📚 Additional resources
 
-- [Documentação oficial do npm](https://docs.npmjs.com/)
-- [Guia de publicação de pacotes](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry)
+- [Official npm documentation](https://docs.npmjs.com/)
+- [Publishing packages guide](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry)
 - [Semantic Versioning](https://semver.org/)
