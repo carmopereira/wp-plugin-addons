@@ -16,10 +16,19 @@ npx @carmopereira/wp-plugin-addons
 
 ## Usage
 
-### 1. Create a new WordPress block
+### 1. Scaffold your plugin
 
+You can start from a Gutenberg block plugin or a traditional PHP plugin:
+
+**Gutenberg block plugin (create-block)**
 ```bash
 npx @wordpress/create-block@latest my-plugin --variant=dynamic
+cd my-plugin
+```
+
+**PHP plugin scaffold**
+```bash
+npx @carmopereira/wp-php-template
 cd my-plugin
 ```
 
