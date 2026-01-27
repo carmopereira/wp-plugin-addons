@@ -1,12 +1,12 @@
 {
-	"name": "@carmopereira/wp-block-setup",
+	"name": "@carmopereira/wp-plugin-addons",
 	"version": "1.0.1",
-	"description": "Setup tool to add custom scripts and configuration to WordPress create-block projects",
+	"description": "Addons to speed up WordPress plugin development for PHP and Gutenberg block plugins",
 	"author": "carmopereira",
 	"license": "GPL-2.0-or-later",
 	"main": "setup.js",
 	"bin": {
-		"carmo-wp-block-setup": "./setup.js"
+		"carmo-wp-plugin-addons": "./setup.js"
 	},
 	"files": [
 		"setup.js",
@@ -21,7 +21,7 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/carmopereira/carmo-wp-block-template.git"
+		"url": "https://github.com/carmopereira/wp-plugin-addons.git"
 	},
 	"publishConfig": {
 		"access": "public"

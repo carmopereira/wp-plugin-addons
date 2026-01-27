@@ -1,17 +1,17 @@
-# @carmopereira/wp-block-setup
+# @carmopereira/wp-plugin-addons
 
-Tool to add custom scripts and configuration to WordPress projects created with `@wordpress/create-block`.
+Addons to speed up WordPress plugin development for both traditional PHP plugins and Gutenberg block plugins.
 
 ## Installation
 
 ```bash
-npm install -g @carmopereira/wp-block-setup
+npm install -g @carmopereira/wp-plugin-addons
 ```
 
 Or run directly with `npx`:
 
 ```bash
-npx @carmopereira/wp-block-setup
+npx @carmopereira/wp-plugin-addons
 ```
 
 ## Usage
@@ -26,13 +26,13 @@ cd my-plugin
 ### 2. Apply the custom setup
 
 ```bash
-npx @carmopereira/wp-block-setup create-block-carmo-addon
+npx @carmopereira/wp-plugin-addons create-block-carmo-addon
 ```
 
 Or run without arguments to choose interactively:
 
 ```bash
-npx @carmopereira/wp-block-setup
+npx @carmopereira/wp-plugin-addons
 ```
 
 ## What gets added
@@ -73,7 +73,7 @@ npm run build
 ## Repository structure
 
 ```
-carmo-wp-block-template/
+carmo-wp-plugin-addons/
 ├── setups/
 │   └── create-block-carmo-addon/
 │       ├── setup/
@@ -95,7 +95,7 @@ To test locally:
 ```bash
 npm link
 cd /path/to/wordpress-project
-npx @carmopereira/wp-block-setup
+npx @carmopereira/wp-plugin-addons
 ```
 
 ## Publish to npm

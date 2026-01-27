@@ -51,7 +51,7 @@ try {
 const pluginName = projectPackage.name;
 
 async function main() {
-	console.log('\n🚀 Carmo WP Block Setup\n');
+	console.log('\n🚀 Carmo WP Plugin Addons\n');
 	console.log(`Plugin: ${pluginName}`);
 	console.log(`Directory: ${projectDir}\n`);
 
@@ -162,7 +162,7 @@ async function main() {
 		for (const line of setupLines) {
 			if (!projectLines.includes(line)) {
 				if (!added) {
-					projectGitignore += '\n# Added by @carmopereira/wp-block-setup\n';
+					projectGitignore += '\n# Added by @carmopereira/wp-plugin-addons\n';
 					added = true;
 				}
 				projectGitignore += line + '\n';
