@@ -1,5 +1,6 @@
 {
 	"prebuild": "npm version patch --no-git-tag-version && node scripts/sync-version.js",
 	"updateGIT": "node scripts/update-git.js",
-	"symlink": "node scripts/create-symlink.js"
+	"symlink": "node scripts/create-symlink.js",
+	"plugin-zip": "wp-scripts plugin-zip"
 }

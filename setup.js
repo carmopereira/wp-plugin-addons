@@ -106,7 +106,16 @@ async function main() {
 		if (!projectPackage.scripts) {
 			projectPackage.scripts = {};
 		}
-		Object.assign(projectPackage.scripts, packageScripts);
+		// Scripts that should only be added when missing, never overwrite
+		// a script the scaffolder (e.g. @wordpress/create-block) or the
+		// user already defined.
+		const addOnlyIfMissing = ['plugin-zip'];
+		for (const [name, command] of Object.entries(packageScripts)) {
+			if (addOnlyIfMissing.includes(name) && projectPackage.scripts[name]) {
+				continue;
+			}
+			projectPackage.scripts[name] = command;
+		}
 		fs.writeFileSync(
 			projectPackageJson,
 			JSON.stringify(projectPackage, null, '\t') + '\n',

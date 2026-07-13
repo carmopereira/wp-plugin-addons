@@ -53,6 +53,7 @@ The `create-block-carmo-addon` setup adds:
 - **`prebuild`**: Automatically updates the version before build (patch version)
 - **`updateGIT`**: Interactive script to run git add, commit, and push
 - **`symlink`**: Script to create a plugin symlink in the WordPress directory
+- **`plugin-zip`**: Builds a distributable plugin `.zip` via `wp-scripts plugin-zip` — only added if the project doesn't already define it
 
 ### Scripts in the `scripts/` folder
 
@@ -77,6 +78,9 @@ npm run updateGIT
 
 # Build (automatically updates version)
 npm run build
+
+# Build a distributable plugin zip
+npm run plugin-zip
 ```
 
 ## Repository structure
