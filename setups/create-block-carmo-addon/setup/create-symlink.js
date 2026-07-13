@@ -13,6 +13,28 @@ function question(query) {
   return new Promise(resolve => rl.question(query, resolve));
 }
 
+// Remove surrounding single or double quotes from a path the user pasted in
+function stripQuotes(str) {
+  return str.trim().replace(/^["']|["']$/g, '').trim();
+}
+
+// If the given path contains a "wp-content" segment anywhere in it, rebuild
+// the path up to (and including) "wp-content" and append "plugins".
+// This lets the user paste any path inside the site (e.g. a path pointing
+// to wp-content/uploads/2026) and still land on the correct plugins folder.
+function resolvePluginsDir(inputPath) {
+  const resolved = path.resolve(inputPath);
+  const parts = resolved.split(path.sep);
+  const idx = parts.indexOf('wp-content');
+
+  if (idx === -1) {
+    return resolved;
+  }
+
+  const wpContentDir = parts.slice(0, idx + 1).join(path.sep) || path.sep;
+  return path.join(wpContentDir, 'plugins');
+}
+
 async function createSymlink() {
   try {
     // Get current plugin directory (where package.json is)
@@ -24,7 +46,10 @@ async function createSymlink() {
     console.log(`Plugin directory: ${pluginDir}\n`);
 
     // Ask for target directory
-    const targetDir = await question('📁 Enter the full path to the WordPress directory (e.g. /Users/carmo/Sites/my-site/wp-content/plugins): ');
+    const targetDir = await question(
+      '📁 Enter the full path to the WordPress directory\n' +
+      '(e.g. /Users/carmo/Sites/my-site/wp-content/plugins):\n'
+    );
 
     if (!targetDir || !targetDir.trim()) {
       console.log('❌ Directory cannot be empty!');
@@ -32,7 +57,15 @@ async function createSymlink() {
       return;
     }
 
-    const targetPath = path.resolve(targetDir.trim());
+    const cleanTargetDir = stripQuotes(targetDir);
+
+    if (!cleanTargetDir) {
+      console.log('❌ Directory cannot be empty!');
+      rl.close();
+      return;
+    }
+
+    const targetPath = resolvePluginsDir(cleanTargetDir);
     const symlinkPath = path.join(targetPath, pluginName);
 
     // Check if the target directory exists

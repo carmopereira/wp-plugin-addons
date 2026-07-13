@@ -1,6 +1,6 @@
 {
 	"name": "@carmopereira/wp-plugin-addons",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "Addons to speed up WordPress plugin development for PHP and Gutenberg block plugins",
 	"author": "carmopereira",
 	"license": "GPL-2.0-or-later",
