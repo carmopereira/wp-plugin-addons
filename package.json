@@ -6,7 +6,7 @@
 	"license": "GPL-2.0-or-later",
 	"main": "setup.js",
 	"bin": {
-		"carmo-wp-plugin-addons": "./setup.js"
+		"carmo-wp-plugin-addons": "setup.js"
 	},
 	"files": [
 		"setup.js",
@@ -21,7 +21,7 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/carmopereira/wp-plugin-addons.git"
+		"url": "git+https://github.com/carmopereira/wp-plugin-addons.git"
 	},
 	"publishConfig": {
 		"access": "public"
