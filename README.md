@@ -4,14 +4,10 @@ Addons to speed up WordPress plugin development for both traditional PHP plugins
 
 ## Installation
 
-```bash
-npm install -g @carmopereira/wp-plugin-addons
-```
-
-Or run directly with `npx`:
+Or run directly with `npx` avoiding local cache:
 
 ```bash
-npx @carmopereira/wp-plugin-addons
+npx @carmopereira/wp-plugin-addons@latest
 ```
 
 ## Usage
@@ -34,14 +30,10 @@ cd my-plugin
 
 ### 2. Apply the custom setup
 
-```bash
-npx @carmopereira/wp-plugin-addons create-block-carmo-addon
-```
-
-Or run without arguments to choose interactively:
+Open a terminal at the plugin folder
 
 ```bash
-npx @carmopereira/wp-plugin-addons
+npx @carmopereira/wp-plugin-addons@latest
 ```
 
 ## What gets added
@@ -99,23 +91,6 @@ carmo-wp-plugin-addons/
 ├── package.json
 ├── .npmignore
 └── README.md
-```
-
-## Development
-
-To test locally:
-
-```bash
-npm link
-cd /path/to/wordpress-project
-npx @carmopereira/wp-plugin-addons
-```
-
-## Publish to npm
-
-```bash
-npm login
-npm publish --access public
 ```
 
 ## License
