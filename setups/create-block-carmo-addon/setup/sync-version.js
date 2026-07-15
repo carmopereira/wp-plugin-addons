@@ -97,4 +97,13 @@ if (blockJsonPath) {
 	});
 }
 
+// Update Stable tag in readme.txt if found
+const readmePath = path.join(root, 'readme.txt');
+updateFile(readmePath, (contents) => {
+	return contents.replace(
+		/^Stable tag:\s*.*$/m,
+		`Stable tag: ${version}`
+	);
+});
+
 console.log(`✅ Version synced: ${version}`);
