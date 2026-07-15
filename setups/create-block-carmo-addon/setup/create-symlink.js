@@ -13,9 +13,18 @@ function question(query) {
   return new Promise(resolve => rl.question(query, resolve));
 }
 
-// Remove surrounding single or double quotes from a path the user pasted in
+// Remove surrounding single or double quotes from a path the user pasted in.
+// Runs in a loop and strips stray newlines too, since a messy paste (e.g. two
+// paste attempts landing on the same line) can leave more than one quote
+// character stacked at either end.
 function stripQuotes(str) {
-  return str.trim().replace(/^["']|["']$/g, '').trim();
+  let result = str.replace(/[\r\n]+/g, '').trim();
+  let previous;
+  do {
+    previous = result;
+    result = result.replace(/^["']|["']$/g, '').trim();
+  } while (result !== previous);
+  return result;
 }
 
 // If the given path contains a "wp-content" segment anywhere in it, rebuild
@@ -61,6 +70,13 @@ async function createSymlink() {
 
     if (!cleanTargetDir) {
       console.log('❌ Directory cannot be empty!');
+      rl.close();
+      return;
+    }
+
+    if (!path.isAbsolute(cleanTargetDir)) {
+      console.log(`❌ "${cleanTargetDir}" is not an absolute path.`);
+      console.log('   Check for stray characters left over from pasting (e.g. an extra quote) and try again.');
       rl.close();
       return;
     }
